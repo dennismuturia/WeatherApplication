@@ -5,7 +5,8 @@ package com.webweaver.dennis.weatherapplication;
  */
 
 public class Constants {
-    public static String currentWeather ="";
-    public static String forecast ="";
-    public static String apiKey = BuildConfig.apiKey;
+
+    public static final String currentWeather ="";
+    public static final String forecast ="";
+    public static final String apiKey = BuildConfig.apiKey;
 }
