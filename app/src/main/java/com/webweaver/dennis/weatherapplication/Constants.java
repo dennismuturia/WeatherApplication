@@ -8,5 +8,5 @@ public class Constants {
 
     public static final String currentWeather ="";
     public static final String forecast ="";
-    public static final String apiKey = BuildConfig.apiKey;
+    public static final String apiKey = BuildConfig.oapiKey;
 }
