@@ -1,4 +1,4 @@
-package com.webweaver.dennis.weatherapplication;
+package com.webweaver.dennis.weatherapplication.ui;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.webweaver.dennis.weatherapplication.R;
 
 import java.util.List;
 import java.util.Locale;

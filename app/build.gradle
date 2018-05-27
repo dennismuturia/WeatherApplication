@@ -17,6 +17,7 @@ android {
         }
         debug{
             buildConfigField "String", "oapiKey", oapiKey
+            buildConfigField "String", "unsplashApi", unsplashApi
         }
     }
 }
