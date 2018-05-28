@@ -22,6 +22,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
     TextView locationText;
+    public String mLocation = "";
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 locationText.setText(getLocation(location.getLatitude(), location.getLongitude()));
+                mLocation = getLocation(location.getLatitude(), location.getLongitude());//Setting the string variable to mLocation
             }catch (Exception e){
                 e.printStackTrace();
                 Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
