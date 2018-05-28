@@ -33,8 +33,6 @@ public class CurrentWeatherService {
         //Create a call asynchronously
         Call call = okHttpClient.newCall(request);
         call.enqueue(callback);
-
-
     }
 
 }

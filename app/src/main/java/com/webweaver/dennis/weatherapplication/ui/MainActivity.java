@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
             }
         }
+        getWeather();
     }
 
     @Override
@@ -89,5 +90,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return currentCity;
+    }
+    //This will be the method to get the wetaher data
+    public void getWeather(){
+
     }
 }
