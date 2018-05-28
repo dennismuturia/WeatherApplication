@@ -5,4 +5,5 @@ package com.webweaver.dennis.weatherapplication.model;
  */
 
 public class CurrentWeatherMOdel {
+
 }

@@ -10,16 +10,24 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.webweaver.dennis.weatherapplication.R;
+import com.webweaver.dennis.weatherapplication.services.CurrentWeatherService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
     LocationManager locationManager;
     TextView locationText;
     public String mLocation = "";
@@ -44,12 +52,14 @@ public class MainActivity extends AppCompatActivity {
             try {
                 locationText.setText(getLocation(location.getLatitude(), location.getLongitude()));
                 mLocation = getLocation(location.getLatitude(), location.getLongitude());//Setting the string variable to mLocation
+                Toast.makeText(this, "Location Found", Toast.LENGTH_SHORT).show();
+                getWeather();
             }catch (Exception e){
                 e.printStackTrace();
-                Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
             }
         }
-        getWeather();
+
     }
 
     @Override
@@ -93,6 +103,22 @@ public class MainActivity extends AppCompatActivity {
     }
     //This will be the method to get the wetaher data
     public void getWeather(){
+        final CurrentWeatherService weatherService = new CurrentWeatherService();
+        weatherService.getCurrentWeather(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String jsonData = response.body().string();
+                    Log.v(TAG, jsonData);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
