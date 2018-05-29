@@ -30,13 +30,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
     LocationManager locationManager;
     TextView locationText;
-    public String mLocation = "";
+    TextView apiData;
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         locationText = (TextView)findViewById(R.id.locationText);
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)){
@@ -51,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 locationText.setText(getLocation(location.getLatitude(), location.getLongitude()));
-                mLocation = getLocation(location.getLatitude(), location.getLongitude());//Setting the string variable to mLocation
+                String mLocation = getLocation(location.getLatitude(), location.getLongitude());//Setting the string variable to mLocation
                 Toast.makeText(this, "Location Found", Toast.LENGTH_SHORT).show();
-                getWeather();
+                getWeather(mLocation);
             }catch (Exception e){
                 e.printStackTrace();
                 //Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
@@ -102,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
         return currentCity;
     }
     //This will be the method to get the wetaher data
-    public void getWeather(){
+    public void getWeather(String location){
         final CurrentWeatherService weatherService = new CurrentWeatherService();
-        weatherService.getCurrentWeather(new Callback() {
+        weatherService.getCurrentWeather(location, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -114,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     String jsonData = response.body().string();
+                    apiData = (TextView)findViewById(R.id.apiData);
+                    apiData.setText(jsonData.toString());
                     Log.v(TAG, jsonData);
                 }catch (Exception e){
                     e.printStackTrace();

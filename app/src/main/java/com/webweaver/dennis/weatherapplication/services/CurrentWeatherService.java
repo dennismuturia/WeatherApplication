@@ -15,19 +15,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by dennis on 5/27/18.
- */
 
 public class CurrentWeatherService {
-    public static void getCurrentWeather(Callback callback){
-        MainActivity mainActivity =  new MainActivity();
+    public static void getCurrentWeather(String location,Callback callback){
         //Building the okhttp client to buld the url
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
         //Building the link itself
         HttpUrl.Builder urlbuilder = HttpUrl.parse(Constants.currentWeatherURL).newBuilder();
-        urlbuilder.addQueryParameter(Constants.searchQuery, mainActivity.mLocation);
+        urlbuilder.addQueryParameter(Constants.searchQuery,location);
+        urlbuilder.addQueryParameter(Constants.appID, Constants.apiKey);
         String url = urlbuilder.build().toString();//String of the url
 
         Log.d("url", url);
@@ -40,8 +37,10 @@ public class CurrentWeatherService {
         call.enqueue(callback);
     }
     //Now the method to fetch the data from the api
+
     public ArrayList<CurrentWeatherMOdel> theWeather(Response response){
         ArrayList<CurrentWeatherMOdel>weather = new ArrayList<>();
 
     }
+
 }
