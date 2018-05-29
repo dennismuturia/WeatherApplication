@@ -6,6 +6,11 @@ import com.webweaver.dennis.weatherapplication.Constants;
 import com.webweaver.dennis.weatherapplication.model.CurrentWeatherMOdel;
 import com.webweaver.dennis.weatherapplication.ui.MainActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -40,7 +45,27 @@ public class CurrentWeatherService {
 
     public ArrayList<CurrentWeatherMOdel> theWeather(Response response){
         ArrayList<CurrentWeatherMOdel>weather = new ArrayList<>();
+        try{
+            String jsonData = response.body().string();
+            if (response.isSuccessful()){
+                JSONObject weatherObject = new JSONObject(jsonData);
+                JSONArray weatherArray = weatherObject.getJSONArray("weather");
+                for (int i = 0; i < weatherArray.length(); i++){
+                    JSONObject theOtherObject = weatherArray.getJSONObject(i);
+                    String mainWeather = theOtherObject.getString("main");
+                    String weatherDesc = theOtherObject.getString("description");
 
+
+                    CurrentWeatherMOdel currentWeatherMOdel = new CurrentWeatherMOdel(mainWeather, weatherDesc);
+                    weather.add(currentWeatherMOdel);
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return weather;
     }
 
 }

@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.webweaver.dennis.weatherapplication.R;
+import com.webweaver.dennis.weatherapplication.model.CurrentWeatherMOdel;
 import com.webweaver.dennis.weatherapplication.services.CurrentWeatherService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     LocationManager locationManager;
     TextView locationText;
     TextView apiData;
+    public ArrayList<CurrentWeatherMOdel>mWeather = new ArrayList<>();
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     String jsonData = response.body().string();
                     apiData = (TextView)findViewById(R.id.apiData);
                     apiData.setText(jsonData.toString());
+                    mWeather = weatherService.theWeather(response);
                     Log.v(TAG, jsonData);
                 }catch (Exception e){
                     e.printStackTrace();
