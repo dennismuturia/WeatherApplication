@@ -9,14 +9,18 @@ public class CurrentWeatherModel {
     private String description;
     private String avgTemp;
     private String humidity;
+    private String speed;
+    private String country;
 
 
     //This is the constructor for this class
-public CurrentWeatherModel(String mainWeather, String description, String avgTemp, String humidity){
+public CurrentWeatherModel(String mainWeather, String description, String avgTemp, String humidity, String speed, String country){
     this.mainWeather = mainWeather;
     this.description = description;
     this.avgTemp = avgTemp;
     this.humidity = humidity;
+    this.speed = speed;
+    this.country = country;
 }
 
     public String getMainWeather() {
@@ -34,4 +38,11 @@ public CurrentWeatherModel(String mainWeather, String description, String avgTem
         return humidity;
     }
 
+    public String getSpeed() {
+        return speed;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }

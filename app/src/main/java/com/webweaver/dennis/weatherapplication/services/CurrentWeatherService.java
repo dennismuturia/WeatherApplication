@@ -49,22 +49,28 @@ public class CurrentWeatherService {
             if (response.isSuccessful()){
                 JSONObject weatherObject = new JSONObject(jsonData);
                 JSONObject temps = weatherObject.getJSONObject("main");
-                for (int j = 0; j < temps.length(); j++){
+                for (int j = 0; j < temps.length(); j++) {
                     String mainTemp = temps.getString("temp");
                     String humidity = temps.getString("humidity");
-                    JSONArray weatherArray = weatherObject.getJSONArray("weather");
-                    for (int i = 0; i < weatherArray.length(); i++) {
-                        JSONObject theOtherObject = weatherArray.getJSONObject(i);
-                        String mainWeather = theOtherObject.getString("main");
-                        String weatherDesc = theOtherObject.getString("description");
-                        //Parsing the data to the model that was fetched from the API
-                        CurrentWeatherModel currentWeatherModel = new CurrentWeatherModel(mainWeather, weatherDesc, mainTemp, humidity);
-                        weather.add(currentWeatherModel);
+                    JSONObject winds = weatherObject.getJSONObject("wind");
+                    for (int k = 0; k < winds.length(); k++) {
+                        String speed = winds.getString("speed");
+                        JSONObject theSys = weatherObject.getJSONObject("sys");
+                        for (int g = 0; g < theSys.length(); g++) {
+                            String country = theSys.getString("country");
+                            JSONArray weatherArray = weatherObject.getJSONArray("weather");
+                            for (int i = 0; i < weatherArray.length(); i++) {
+                                JSONObject theOtherObject = weatherArray.getJSONObject(i);
+                                String mainWeather = theOtherObject.getString("main");
+                                String weatherDesc = theOtherObject.getString("description");
+                                //Parsing the data to the model that was fetched from the API
+                                CurrentWeatherModel currentWeatherModel = new CurrentWeatherModel(mainWeather, weatherDesc, mainTemp, humidity, speed, country);
+                                weather.add(currentWeatherModel);
+                            }
+                        }
+
                     }
                 }
-
-
-
             }
         }catch (IOException e){
             e.printStackTrace();
