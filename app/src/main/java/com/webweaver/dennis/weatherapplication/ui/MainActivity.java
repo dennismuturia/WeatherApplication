@@ -30,9 +30,12 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
-    LocationManager locationManager;
+    //LocationManager locationManager;
     TextView locationText;
     TextView apiData;
+
+    public ArrayList<CurrentWeatherMOdel>myWeather = new ArrayList<>();
+
     public ArrayList<CurrentWeatherMOdel>mWeather = new ArrayList<>();
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     @Override
@@ -58,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 getWeather(mLocation);
             }catch (Exception e){
                 e.printStackTrace();
-                //Toast.makeText(this, "Location not found!", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -114,14 +116,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String jsonData = response.body().string();
-                    apiData = (TextView)findViewById(R.id.apiData);
-                    apiData.setText(jsonData.toString());
-                    mWeather = weatherService.theWeather(response);
-                    Log.v(TAG, jsonData);
-                }catch (Exception e){
-                    e.printStackTrace();
+                if (response.isSuccessful()){
+                    myWeather = weatherService.theWeather(response);
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });
                 }
             }
         });

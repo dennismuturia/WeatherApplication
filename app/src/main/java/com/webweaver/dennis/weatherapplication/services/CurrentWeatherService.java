@@ -55,7 +55,7 @@ public class CurrentWeatherService {
                     String mainWeather = theOtherObject.getString("main");
                     String weatherDesc = theOtherObject.getString("description");
 
-
+                    //Parsing the data to the model that was fetched from the API
                     CurrentWeatherMOdel currentWeatherMOdel = new CurrentWeatherMOdel(mainWeather, weatherDesc);
                     weather.add(currentWeatherMOdel);
                 }
