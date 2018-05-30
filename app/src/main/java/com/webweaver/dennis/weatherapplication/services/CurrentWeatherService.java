@@ -3,8 +3,7 @@ package com.webweaver.dennis.weatherapplication.services;
 import android.util.Log;
 
 import com.webweaver.dennis.weatherapplication.Constants;
-import com.webweaver.dennis.weatherapplication.model.CurrentWeatherMOdel;
-import com.webweaver.dennis.weatherapplication.ui.MainActivity;
+import com.webweaver.dennis.weatherapplication.model.CurrentWeatherModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,22 +42,29 @@ public class CurrentWeatherService {
     }
     //Now the method to fetch the data from the api
 
-    public ArrayList<CurrentWeatherMOdel> theWeather(Response response){
-        ArrayList<CurrentWeatherMOdel>weather = new ArrayList<>();
+    public ArrayList<CurrentWeatherModel> theWeather(Response response){
+        ArrayList<CurrentWeatherModel>weather = new ArrayList<>();
         try{
             String jsonData = response.body().string();
             if (response.isSuccessful()){
                 JSONObject weatherObject = new JSONObject(jsonData);
-                JSONArray weatherArray = weatherObject.getJSONArray("weather");
-                for (int i = 0; i < weatherArray.length(); i++){
-                    JSONObject theOtherObject = weatherArray.getJSONObject(i);
-                    String mainWeather = theOtherObject.getString("main");
-                    String weatherDesc = theOtherObject.getString("description");
-
-                    //Parsing the data to the model that was fetched from the API
-                    CurrentWeatherMOdel currentWeatherMOdel = new CurrentWeatherMOdel(mainWeather, weatherDesc);
-                    weather.add(currentWeatherMOdel);
+                JSONObject temps = weatherObject.getJSONObject("main");
+                for (int j = 0; j < temps.length(); j++){
+                    String mainTemp = temps.getString("temp");
+                    String humidity = temps.getString("humidity");
+                    JSONArray weatherArray = weatherObject.getJSONArray("weather");
+                    for (int i = 0; i < weatherArray.length(); i++) {
+                        JSONObject theOtherObject = weatherArray.getJSONObject(i);
+                        String mainWeather = theOtherObject.getString("main");
+                        String weatherDesc = theOtherObject.getString("description");
+                        //Parsing the data to the model that was fetched from the API
+                        CurrentWeatherModel currentWeatherModel = new CurrentWeatherModel(mainWeather, weatherDesc, mainTemp, humidity);
+                        weather.add(currentWeatherModel);
+                    }
                 }
+
+
+
             }
         }catch (IOException e){
             e.printStackTrace();

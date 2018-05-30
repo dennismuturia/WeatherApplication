@@ -10,12 +10,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.webweaver.dennis.weatherapplication.R;
-import com.webweaver.dennis.weatherapplication.model.CurrentWeatherMOdel;
+import com.webweaver.dennis.weatherapplication.model.CurrentWeatherModel;
 import com.webweaver.dennis.weatherapplication.services.CurrentWeatherService;
 
 import java.io.IOException;
@@ -32,11 +31,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
     //LocationManager locationManager;
     TextView locationText;
-    TextView apiData;
+    //TextView apiData; No longer needed
 
-    public ArrayList<CurrentWeatherMOdel>myWeather = new ArrayList<>();
+    public ArrayList<CurrentWeatherModel>myWeather = new ArrayList<>();
 
-    public ArrayList<CurrentWeatherMOdel>mWeather = new ArrayList<>();
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
